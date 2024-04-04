@@ -72,37 +72,13 @@ def findBestMove(game_state, valid_moves, return_queue):
     global next_move
     next_move = None
     random.shuffle(valid_moves)
-    # findMoveNegaMaxAlphaBeta(game_state, valid_moves, DEPTH, -CHECKMATE, CHECKMATE,
-    #                          1 if game_state.white_to_move else -1)
-    
+   
     use_alpha_beta = True
     if use_alpha_beta:
         findMoveAlphaBeta(game_state, valid_moves, DEPTH, -CHECKMATE, CHECKMATE, True)
     else:
         findMoveMinimax(game_state, valid_moves, DEPTH, True)
     return_queue.put(next_move)
-
-
-# def findMoveNegaMaxAlphaBeta(game_state, valid_moves, depth, alpha, beta, turn_multiplier):
-#     global next_move
-#     if depth == 0:
-#         return turn_multiplier * scoreBoard(game_state)
-#     # move ordering - implement later //TODO
-#     max_score = -CHECKMATE
-#     for move in valid_moves:
-#         game_state.makeMove(move)
-#         next_moves = game_state.getValidMoves()
-#         score = -findMoveNegaMaxAlphaBeta(game_state, next_moves, depth - 1, -beta, -alpha, -turn_multiplier)
-#         if score > max_score:
-#             max_score = score
-#             if depth == DEPTH:
-#                 next_move = move
-#         game_state.undoMove()
-#         if max_score > alpha:
-#             alpha = max_score
-#         if alpha >= beta:
-#             break
-#     return max_score
 
 def findMoveMinimax(game_state, valid_moves, depth, maximizingPlayer):
     global next_move
@@ -162,59 +138,6 @@ def findMoveAlphaBeta(game_state, valid_moves, depth, alpha, beta, maximizingPla
             if alpha >= beta:
                 break
         return value
-
-def findMoveAlphaBeta(game_state, valid_moves, depth, alpha, beta, maximizingPlayer):
-    global next_move
-    if depth == 0:
-        return scoreBoard(game_state)
-    
-    if maximizingPlayer:
-        value = -CHECKMATE
-        for move in valid_moves:
-            game_state.makeMove(move)
-            next_moves = game_state.getValidMoves()
-            value = max(value, findMoveAlphaBeta(game_state, next_moves, depth - 1, alpha, beta, False))
-            game_state.undoMove()
-            if value > alpha:
-                alpha = value
-                if depth == DEPTH:
-                    next_move = move
-            if alpha >= beta:
-                break
-        return value
-    else:
-        value = CHECKMATE
-        for move in valid_moves:
-            game_state.makeMove(move)
-            next_moves = game_state.getValidMoves()
-            value = min(value, findMoveAlphaBeta(game_state, next_moves, depth - 1, alpha, beta, True))
-            game_state.undoMove()
-            beta = min(beta, value)
-            if alpha >= beta:
-                break
-        return value
-    
-'''
-function alphabeta(node, depth, α, β, maximizingPlayer) is
-    if depth == 0 or node is terminal then
-        return the heuristic value of node
-    if maximizingPlayer then
-        value := −∞
-        for each child of node do
-            value := max(value, alphabeta(child, depth − 1, α, β, FALSE))
-            α := max(α, value)
-            if value ≥ β then
-                break (* β cutoff *)
-        return value
-    else
-        value := +∞
-        for each child of node do
-            value := min(value, alphabeta(child, depth − 1, α, β, TRUE))
-            β := min(β, value)
-            if value ≤ α then
-                break (* α cutoff *)
-        return value
-'''
 
 def scoreBoard(game_state):
     """

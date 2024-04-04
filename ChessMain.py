@@ -1,6 +1,6 @@
  #Dùng pygame để tạo giao diện đồ họa   
 import pygame as p
-import ChessEngine, ChessAI as ChessAI #Engine : quản lý logic chess,AI: tạo nước đi cho AI
+import ChessEngine, ChessAI #Engine : quản lý logic chess,AI: tạo nước đi cho AI
 import sys  
 from multiprocessing import Process, Queue
 import pygame.image as pimg
@@ -15,7 +15,7 @@ IMAGES = {}
 
 
 # Định nghĩa đường dẫn tới thư mục chứa hình ảnh các quân cờ
-IMAGE_PATH = r"D:\\Users\\Document\\College\\Nam 3\\Tri tue nhan tao\\BT Lon\\BAOCAO\\images\\"
+IMAGE_PATH = "images\\"
 
 def loadImages():
     # Danh sách các quân cờ
